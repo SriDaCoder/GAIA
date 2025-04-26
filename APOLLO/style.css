@@ -123,3 +123,10 @@ nav {
     height: auto;
   }
 }
+
+#left{
+  float:left;
+}
+#right{
+  float:right;
+}
