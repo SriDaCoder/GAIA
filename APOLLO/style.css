@@ -3,48 +3,94 @@ html, body {
   padding: 0;
   font-family: Arial, sans-serif;
   height: 100%;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
+  display: block;
   background-color: #f1f1f1;
 }
 
 canvas {
   display: block;
-  margin: auto;
   background-color: #f0f0f0;
+  width: 100%;
+  height: auto;
 }
 
 h1, h2, h3, p {
-  text-align: center;
+  text-align: left;
+  margin: 0 20px;
 }
 
 li {
   list-style: none;
-  color: #007BFF;
   font-weight: bold;
+  text-align: left;
+  margin: 0 20px;
 }
 
 li:hover {
   text-decoration: underline;
 }
 
-nav {
-  color: white;
-  padding: 10px;
-  width: 100%;
-  position: fixed; /* corrected from offset-position */
-  top: 0;
-  background-color: #333; /* add background so it's visible */
-  z-index: 1000;
+div {
+  display: block;
 }
 
-div {
+nav {
+  color: white;
+  background-color: #333;
+  position: fixed;
+  top: 0;
+  z-index: 1000;
   display: flex;
-  justify-content: center;
+  justify-content: space-between;
   align-items: center;
-  flex-direction: column;
+  padding: 20px;
+  width: 100%;
+}
+
+.logo a {
+  text-decoration: none;
+  color: #ffffff;
+  font-weight: bold;
+  font-size: 1.2em;
+  transition: color 0.3s;
+}
+
+.nav-links {
+  list-style: none;
+  display: flex;
+}
+
+.nav-links li {
+  margin-right: 20px;
+}
+
+.nav-links li a {
+  text-decoration: none;
+  color: #666462;
+  position: relative;
+  padding: 0 10px;
+  transition: color 0.3s;
+  display: inline-block;
+}
+
+.nav-links li a:hover {
+  color: #318CE7;
+}
+
+.nav-links li a::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 2px;
+  background-color: #318CE7;
+  bottom: -6px;
+  left: 0;
+  transition: width 0.4s;
+  display: block;
+}
+
+.nav-links li a:hover::after {
+  width: 100%;
 }
 
 @media (max-width: 768px) {
@@ -54,7 +100,7 @@ div {
   }
 
   canvas {
-    width: 90vw;
+    width: 100%;
     height: auto;
   }
 
@@ -65,8 +111,6 @@ div {
 
 @media (max-width: 480px) {
   html, body {
-    flex-direction: column;
-    justify-content: flex-start;
     font-size: 85%;
   }
 
@@ -78,44 +122,4 @@ div {
     width: 100%;
     height: auto;
   }
-}
-
-.tab {
-  overflow: hidden;
-  border: 1px solid #ccc;
-  background-color: #f1f1f1;
-}
-
-/* Tab buttons */
-.tab button {
-  background-color: inherit;
-  float: left;
-  border: none;
-  outline: none;
-  cursor: pointer;
-  padding: 14px 16px;
-  transition: 0.3s;
-}
-
-.tab button:hover {
-  background-color: #ddd;
-}
-
-.tab button.active {
-  background-color: #ccc;
-}
-
-.tabcontent {
-  display: none;
-  padding: 6px 12px;
-  border: 1px solid #ccc;
-  border-top: none;
-}
-.tabcontent.active {
-  display: block;
-}
-/* Add a dark background color to the active tab link */
-.tab button.active {
-  background-color: #ccc;
-  color: white;
 }
