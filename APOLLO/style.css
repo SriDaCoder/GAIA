@@ -145,6 +145,48 @@ h2 {
   margin: 20px 0;
 }
 
+h5 {
+  color: #F7F7F7;
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+h3 {
+  color: #F7F7F7;
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+h4 {
+  color: #F7F7F7;
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+h6 {
+  color: #F7F7F7;
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+h7 {
+  color: #F7F7F7;
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+h8 {
+  color: #F7F7F7;
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
+h9 {
+  color: #F7F7F7;
+  font-size: 1.2em;
+  margin: 10px 0;
+}
+
 p {
   color: #F7F7F7;
   font-size: 1.2em;
@@ -159,6 +201,16 @@ footer {
   position: fixed;
   bottom: 0;
   width: 100%;
+}
+
+header {
+  overflow-y: hidden;
+  background-color: #0E1117;
+}
+
+body {
+  overflow-x: hidden;
+  background-color: #0E1117;
 }
 
 @media (max-width: 768px) {
