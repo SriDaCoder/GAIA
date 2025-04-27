@@ -213,6 +213,11 @@ body {
   background-color: #0E1117;
 }
 
+span {
+  color: #F7F7F7;
+  font-size: 1.2em;
+}
+
 @media (max-width: 768px) {
   html, body {
     padding: 10px;
