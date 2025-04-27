@@ -28,16 +28,23 @@
         </marquee>
     </div>
 
+    <script>
+        function contact(x) {
+            alert(`Contact form submitted successfully, ${x}!`);
+            const url = "cont.html"; // Replace with the desired URL
+            window.open(url, "_blank");
+        }
+    </script>
+
     <div id="Home" class="'tabcontent'">
         <div style="padding: 20px; margin: 20px 0; align-self: center;">
             <h2>Contact Us</h2>
-            <form action="#" method="post">
-                <label for="name">Name:</label><br>
-                <input type="text" id="name" name="name"><br><br>
-                <label for="email">Email:</label><br>
-                <input type="email" id="email" name="email"><br><br>
-                <input type="submit" value="Submit">
-            </form>
+            <label for="name">Name:</label><br>
+            <input type="text" id="name" name="name"><br><br>
+            <label for="email">Email:</label><br>
+            <input type="email" id="email" name="email"><br><br>
+            <input type="submit" value="Submit" onclick="contact(document.getElementById('name').value)">
+            <input type="reset" value="Reset">
         </div>
     </div>
     
