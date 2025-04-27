@@ -112,6 +112,22 @@ nav {
   float:right;
 }
 
+.btn {
+  background-color: #ababab;
+  color: #000000;
+  border: #ababab;
+  padding: 5px;
+  border-radius: 10px;
+}
+
+.txt {
+  background-color: #ababab;
+  color: #000000;
+  border: #ababab;
+  padding: 3px;
+  border-radius: 10px;
+}
+
 @media (max-width: 768px) {
   html, body {
     padding: 10px;
