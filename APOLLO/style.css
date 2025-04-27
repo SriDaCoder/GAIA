@@ -93,6 +93,25 @@ nav {
   width: 100%;
 }
 
+.nav-links li a.active::after {
+  width: 100%;
+}
+
+.nav-links li a.active {
+  color: #318CE7;
+}
+
+.nav-links li a.active:hover {
+  color: #318CE7;
+}
+
+#left{
+  float:left;
+}
+#right{
+  float:right;
+}
+
 @media (max-width: 768px) {
   html, body {
     padding: 10px;
@@ -122,11 +141,4 @@ nav {
     width: 100%;
     height: auto;
   }
-}
-
-#left{
-  float:left;
-}
-#right{
-  float:right;
 }
