@@ -138,6 +138,9 @@ def chat(prompt, max_len=200):
     reply = output.split('\n')[-2].replace("AI: ", "").strip()
     return reply
 
+os.system('cls' if os.name == 'nt' else 'clear')
+print("APOLLO AI - Chatbot with Command Recognition\n")
+
 # Chat loop
 while True:
     user_input = input("You: ")
