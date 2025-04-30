@@ -52,6 +52,34 @@ footer {
   width: 100%;
 }
 
+nav { color: white; background-color: #333; position: fixed; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; padding: 20px; width: 100%; }
+
+.logo a { text-decoration: none; color: #ffffff; font-weight: bold; font-size: 1.2em; transition: color 0.3s; }
+
+.logo a:hover { color: #318CE7; }
+
+.btn { background-color: #40434B; color: #F7F7F7; padding: 5px; border-radius: 10px; }
+
+.txt { background-color: #40434B; color: #F7F7F7; padding: 3px; border-radius: 10px; }
+
+.nav-links { list-style: none; display: flex; }
+
+.nav-links li { margin-right: 20px; }
+
+.nav-links li a { text-decoration: none; color: #c8c8c8; position: relative; padding: 0 10px; transition: color 0.3s; display: inline-block; }
+
+.nav-links li a:hover { color: #318CE7; }
+
+.nav-links li a::after { content: ''; position: absolute; width: 0; height: 2px; background-color: #318CE7; bottom: -6px; left: 0; transition: width 0.4s; display: block; }
+
+.nav-links li a:hover::after { width: 100%; }
+
+.nav-links li a.active::after { width: 100%; }
+
+.nav-links li a.active { color: #318CE7; }
+
+.nav-links li a.active:hover { color: #318CE7; }
+
 @media (max-width: 768px) {
   html, body {
     padding: 10px;
