@@ -137,7 +137,10 @@ marquee {
   color: #F7F7F7;
   padding: 5px;
   border-radius: 10px;
+  display: block;
+  margin-top: 80px; /* Adjust based on your nav height */
 }
+
 
 h2 {
   color: #F7F7F7;
@@ -164,24 +167,6 @@ h4 {
 }
 
 h6 {
-  color: #F7F7F7;
-  font-size: 1.2em;
-  margin: 10px 0;
-}
-
-h7 {
-  color: #F7F7F7;
-  font-size: 1.2em;
-  margin: 10px 0;
-}
-
-h8 {
-  color: #F7F7F7;
-  font-size: 1.2em;
-  margin: 10px 0;
-}
-
-h9 {
   color: #F7F7F7;
   font-size: 1.2em;
   margin: 10px 0;
