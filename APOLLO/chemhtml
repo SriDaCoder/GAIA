@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang='en'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1.0'>
+        <title>APOLLO - Chemistry</title>
+        <link rel='stylesheet' href='https:sridacoder.github.io/GAIA/APOLLO/style.css'>
+    </head>
+    <body>
+        <header>
+            <h1>APOLLO</h1>
+            <nav>
+                <div class='logo'>
+                    <a href='home.html'>APOLLO</a>
+                </div>
+                <ul class='nav-links'>
+                    <li><a href='home.html'>Home</a></li>
+                    <li><a href='abt.html'>About</a></li>
+                    <li><a href='rev.html'>Revision</a></li>
+                    <li><a href='cont.html'>Contact</a></li>
+                </ul>
+            </nav>
+        </header>
+        <div id='main'>
+            <marquee id='GFG' style='border:#F7F7F7 2px solid; width:100%'>
+                This is a pre-release version of APOLLO. It is not the final version and may contain bugs or incomplete features. Please use it at your own risk.
+            </marquee>
+        </div>
+
+        <div class='container'>
+            <h2>Revision</h2>
+            <p>Welcome to the Chemistry revision page!</p>
+            <p>Please be aware that not all sites have been completed on this site.</p>
+            <ul>
+                <li><a href='chemistry_notes.html'>Stoichometry</a></li>
+                <li><a href='chemistry_quizzes.html'>Electrolysis</a></li>
+                <li><a href='chemistry_videos.html'>Metal REactivity Series</a></li>
+            </ul>
+        </div>
+
+        <footer>
+            <p>&copy; 2025 APOLLO. All rights reserved.</p>
+        </footer>
+    </body>
+</html>
