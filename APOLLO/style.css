@@ -138,7 +138,7 @@ marquee {
   padding: 5px;
   border-radius: 10px;
   display: block;
-  margin-top: 80px; /* Adjust based on your nav height */
+  margin-top: 20px; /* Adjust based on your nav height */
   width: 100%;
 }
 
