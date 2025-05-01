@@ -52,6 +52,8 @@ footer {
   width: 100%;
 }
 
+marquee { color:white; font-size: 1.2em; font-weight: bold; }
+
 nav { color: white; background-color: #333; position: fixed; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; padding: 20px; width: 100%; }
 
 .logo a { text-decoration: none; color: #ffffff; font-weight: bold; font-size: 1.2em; transition: color 0.3s; }
