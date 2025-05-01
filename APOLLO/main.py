@@ -8,7 +8,7 @@ from cryptography.fernet import Fernet
 os.system('cls' if os.name == 'nt' else 'clear')
 
 # Memory setup
-memory_dir = "apollo_memory"
+memory_dir = "ATHENA_memory"
 key_path = os.path.join(memory_dir, "key.key")
 history_path = os.path.join(memory_dir, "history.enc")
 os.makedirs(memory_dir, exist_ok=True)
@@ -84,7 +84,7 @@ def get_batch():
     return x, y
 
 # Model
-class ApolloAI(nn.Module):
+class ATHENAAI(nn.Module):
     def __init__(self):
         super().__init__()
         self.embed = nn.Embedding(vocab_size, embedding_dim)
@@ -97,7 +97,7 @@ class ApolloAI(nn.Module):
         logits = self.linear(out)
         return logits, hidden
 
-model = ApolloAI()
+model = ATHENAAI()
 optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
 # Training loop
@@ -139,7 +139,7 @@ def chat(prompt, max_len=200):
     return reply
 
 os.system('cls' if os.name == 'nt' else 'clear')
-print("APOLLO AI - Chatbot with Command Recognition\n")
+print("ATHENA AI - Chatbot with Command Recognition\n")
 
 # Chat loop
 while True:
