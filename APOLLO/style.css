@@ -74,7 +74,7 @@ h5 { font-size: 1.1em; color: white; }
 
 h6 { font-size: 1em; color: white; }
 
-marquee { color:white; font-size: 1.2em; font-weight: bold; }
+marquee { color:white; font-size: 1.2em; font-weight: bold; background-color: #0E1117; }
 
 nav { color: white; background-color: #333; position: fixed; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; padding: 20px; width: 100%; }
 
@@ -103,6 +103,8 @@ nav { color: white; background-color: #333; position: fixed; top: 0; z-index: 10
 .nav-links li a.active { color: #318CE7; }
 
 .nav-links li a.active:hover { color: #318CE7; }
+
+image { background-color: #0E1117; }
 
 @media (max-width: 768px) {
   html, body {
