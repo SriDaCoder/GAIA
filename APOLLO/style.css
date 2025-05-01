@@ -14,7 +14,6 @@ canvas {
 }
 
 nav {
-  color: white;
   background-color: #333;
   position: fixed;
   top: 0;
@@ -44,7 +43,7 @@ nav {
 
 footer {
   background-color: #0E1117;
-  color: #F7F7F7;
+  -webkit-text-fill-color: #F7F7F7;
   text-align: center;
   padding: 10px;
   position: relative;
@@ -53,46 +52,43 @@ footer {
 }
 
 p {
-  color: white;
+  -webkit-text-fill-color: white;
   margin: 0;
   padding: 10px;
 }
 
-a {
-  color: blue
-}
 
-h1 { font-size: 2.5em; color: white; }
+h1 { font-size: 2.5em; -webkit-text-fill-color: white; }
 
-h2 { font-size: 2em; color: white; }
+h2 { font-size: 2em; -webkit-text-fill-color: white; }
 
-h3 { font-size: 1.5em; color: white; }
+h3 { font-size: 1.5em; -webkit-text-fill-color: white; }
 
-h4 { font-size: 1.2em; color: white; }
+h4 { font-size: 1.2em; -webkit-text-fill-color: white; }
 
-h5 { font-size: 1.1em; color: white; }
+h5 { font-size: 1.1em; -webkit-text-fill-color: white; }
 
-h6 { font-size: 1em; color: white; }
+h6 { font-size: 1em; -webkit-text-fill-color: white; }
 
-marquee { color:white; font-size: 1.2em; font-weight: bold; background-color: #0E1117; }
+marquee { -webkit-text-fill--webkit-text-fill-color:white; font-size: 1.2em; font-weight: bold; background-color: #0E1117; }
 
-nav { color: white; background-color: #333; position: fixed; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; padding: 20px; width: 100%; }
+nav { -webkit-text-fill-color: white; background-color: #333; position: fixed; top: 0; z-index: 1000; display: flex; justify-content: space-between; align-items: center; padding: 20px; width: 100%; }
 
-.logo a { text-decoration: none; color: #ffffff; font-weight: bold; font-size: 1.2em; transition: color 0.3s; }
+.logo a { text-decoration: none; -webkit-text-fill-color: #ffffff; font-weight: bold; font-size: 1.2em; transition: -webkit-text-fill-color 0.3s; }
 
-.logo a:hover { color: #318CE7; }
+.logo a:hover { -webkit-text-fill-color: #318CE7; }
 
-.btn { background-color: #40434B; color: #F7F7F7; padding: 5px; border-radius: 10px; }
+.btn { background-color: #40434B; -webkit-text-fill-color: #F7F7F7; padding: 5px; border-radius: 10px; }
 
-.txt { background-color: #40434B; color: #F7F7F7; padding: 3px; border-radius: 10px; }
+.txt { background-color: #40434B; -webkit-text-fill-color: #F7F7F7; padding: 3px; border-radius: 10px; }
 
 .nav-links { list-style: none; display: flex; }
 
 .nav-links li { margin-right: 20px; }
 
-.nav-links li a { text-decoration: none; color: #c8c8c8; position: relative; padding: 0 10px; transition: color 0.3s; display: inline-block; }
+.nav-links li a { text-decoration: none; -webkit-text-fill-color: #c8c8c8; position: relative; padding: 0 10px; transition: -webkit-text-fill-color 0.3s; display: inline-block; }
 
-.nav-links li a:hover { color: #318CE7; }
+.nav-links li a:hover { -webkit-text-fill-color: #318CE7; }
 
 .nav-links li a::after { content: ''; position: absolute; width: 0; height: 2px; background-color: #318CE7; bottom: -6px; left: 0; transition: width 0.4s; display: block; }
 
@@ -100,11 +96,9 @@ nav { color: white; background-color: #333; position: fixed; top: 0; z-index: 10
 
 .nav-links li a.active::after { width: 100%; }
 
-.nav-links li a.active { color: #318CE7; }
+.nav-links li a.active { -webkit-text-fill-color: #318CE7; }
 
-.nav-links li a.active:hover { color: #318CE7; }
-
-image { background-color: #0E1117; }
+.nav-links li a.active:hover { -webkit-text-fill-color: #318CE7; }
 
 @media (max-width: 768px) {
   html, body {
