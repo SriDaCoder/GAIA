@@ -62,6 +62,10 @@ a {
   color: blue
 }
 
+body {
+  background:#0E1117;
+}
+
 h1 { font-size: 2.5em; color: white; }
 
 h2 { font-size: 2em; color: white; }
