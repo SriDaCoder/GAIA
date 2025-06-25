@@ -39,6 +39,20 @@
           <li>Water Provisioning Systems</li>
         </ul>
       </section>
+
+      <div class="settings">
+        <label for="theme">Theme:</label>
+        <select id="theme">
+          <option value="light">Light</option>
+          <option value="dark">Dark</option>
+        </select>
+
+        <label for="accent">Accent Color:</label>
+        <input type="color" id="accent" value="#3498db">
+
+        <button onclick="applySettings()">Save</button>
+      </div>
+
     </main>
 
     <script src="script.js"></script>
