@@ -95,3 +95,10 @@ button {
   background-color: var(--hr);
   margin: 20px 0;
 }
+
+.settings {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 300px;
+}
