@@ -101,7 +101,6 @@ button {
   background-color: #fff;
 }
 
-
 .side-panel {
   height: 100vh;
   width: 0;
@@ -130,4 +129,11 @@ button {
   color: var(--panel-text);
   text-decoration: none;
   display: block;
+}
+
+.hr-style {
+  border: none;
+  height: 1px;
+  background-color: var(--hr);
+  margin: 20px 0;
 }

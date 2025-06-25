@@ -9,6 +9,7 @@ function applyThemeFromStorage() {
     document.documentElement.style.setProperty("--panel-text", "#fff");
     document.documentElement.style.setProperty("--menu-bar", "#ccc");
     document.documentElement.style.setProperty("--menu-bar-active", "#fff");
+    document.documentElement.style.setProperty("--hr", "#ffffff");
   } else {
     document.documentElement.style.setProperty("--bg", "#f4f4f4");
     document.documentElement.style.setProperty("--text", "#000");
@@ -16,6 +17,7 @@ function applyThemeFromStorage() {
     document.documentElement.style.setProperty("--panel-text", "#fff");
     document.documentElement.style.setProperty("--menu-bar", "#333");
     document.documentElement.style.setProperty("--menu-bar-active", "#fff");
+    document.documentElement.style.setProperty("--hr", "#000");
   }
 
   document.documentElement.style.setProperty("--button-bg", accent);
