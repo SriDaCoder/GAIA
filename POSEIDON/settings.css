@@ -11,6 +11,7 @@ body {
   flex-direction: column;
   gap: 15px;
   max-width: 300px;
+  margin-top: 20px;
 }
 
 button {
@@ -43,12 +44,6 @@ main {
   max-width: 600px;
 }
 
-.settings {
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
-  margin-top: 20px;
-}
 
 select, input[type="color"] {
   padding: 5px;
@@ -68,7 +63,6 @@ button {
   transition: background 0.3s;
 }
 
-/* menu button */
 .menu-button {
   width: 30px;
   position: fixed;

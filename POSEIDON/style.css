@@ -79,6 +79,14 @@ body {
   display: block;
 }
 
+select, input[type="color"] {
+  padding: 5px;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  background: var(--bg);
+  color: var(--text);
+}
+
 button {
   background-color: var(--button-bg);
   color: var(--button-text);
@@ -101,4 +109,5 @@ button {
   flex-direction: column;
   gap: 15px;
   max-width: 300px;
+  margin-top: 20px;
 }
