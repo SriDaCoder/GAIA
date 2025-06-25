@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Settings</title>
+        <link rel="stylesheet" href="settings.css">
+        <script src="theme.js"></script>
+        <script src="script.js"></script>
+    </head>
+    <body>
+        <div class="menu-button" onclick="toggleMenu(this)">
+            <div class="bar1"></div>
+            <div class="bar2"></div>
+        </div>
+
+        <div class="side-panel" id="panel">
+            <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="about.html">About</a></li>
+            <li><a href="settings.html">Settings</a></li>
+            </ul>
+        </div>
+
+        <main>
+            <h1>Customize Theme</h1>
+
+            <div class="settings">
+            <label for="theme">Theme:</label>
+            <select id="theme">
+                <option value="light">Light</option>
+                <option value="dark">Dark</option>
+            </select>
+
+            <label for="accent">Accent Color:</label>
+            <input type="color" id="accent" value="#3498db">
+
+            <button onclick="applySettings()">Save</button>
+            </div>
+        </main>
+
+        <script src="settings.js"></script>
+    </body>
+</html>
