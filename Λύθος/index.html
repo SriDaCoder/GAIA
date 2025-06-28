@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Lythos Encrypt</title>
+    <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8"> 
+</head>
+<body>
+    <div class="form-group">
+        <input type="text" id="data" placeholder="Data to Encrypt">
+        <input type="text" id="key" placeholder="Encryption Key (32 chars)">
+        <button onclick="encrypt()">Encrypt</button>
+        <p id="result"></p>
+    </div>
+
+    <script>
+        function encrypt() {
+            const data = document.getElementById('data').value;
+            const key = document.getElementById('key').value;
+
+            fetch('http://localhost:3000/encrypt', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ data, key })
+            })
+            .then(async res => {
+                const text = await res.text();
+                try {
+                    const json = JSON.parse(text);
+                    document.getElementById('result').innerText = json.ciphertext || json.error;
+                } catch {
+                    document.getElementById('result').innerText = `Server error: ${text}`;
+                }
+            });
+            if (key.length !== 32) throw new Error("Key must be 256-bit (32 bytes)");
+        }
+    </script>
+</body>
+</html>
