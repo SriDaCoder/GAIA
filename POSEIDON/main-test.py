@@ -35,8 +35,7 @@ def predict():
     data = request.get_json()
     input_data = np.array([[data["pH"], data["turbidity"], data["dissolved_oxygen"], data["contaminants"]]])
     input_scaled = scaler.transform(input_data)
-    pred = model.predict(input_scaled)[0][0]
-    return jsonify({"usability_score": round(np.clip(pred, 1, 14), 2)})
+    return jsonify({"usability_score": round(np.clip(model.predict(input_scaled)[0][0], 1, 14), 2)})
 
 if __name__ == "__main__":
     app.run(debug=True)
