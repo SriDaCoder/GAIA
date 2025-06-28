@@ -1,10 +1,8 @@
 import os
 
-os.system('pip install steamlit tensorflow numpy')
-
-from tensorflow import keras
+os.system('pip install tk tensorflow numpy')
+import tensorflow as tf
 import numpy as np, sys, tkinter as tk
-from keras.layers import Dense
 
 os.system('clear' if sys == 'linux' else 'cls')
 
@@ -30,13 +28,13 @@ X = np.column_stack((sunlight, water, soil_quality))
 y = plant_health
 
 # Build the model
-model = keras.Sequential([
-    Dense(16, activation='relu', input_shape=(3,)),
-    Dense(8, activation='relu'),
-    Dense(1),
-    Dense(16, activation='relu', input_shape=(3,)),
-    Dense(8, activation='relu'),
-    Dense(1)
+model = tf.keras.Sequential([
+    tf.keras.layers.Dense(16, activation='relu', input_shape=(3,)),
+    tf.keras.layers.Dense(8, activation='relu'),
+    tf.keras.layers.Dense(1),
+    tf.keras.layers.Dense(16, activation='relu', input_shape=(3,)),
+    tf.keras.layers.Dense(8, activation='relu'),
+    tf.keras.layers.Dense(1)
 ])
 
 os.system('clear' if sys == 'linux' else 'cls')
@@ -60,8 +58,6 @@ model.compile(optimizer='adamax', loss='mse')
 model.fit(X, y, epochs=150, verbose=0)
 
 os.system('clear' if sys == 'linux' else 'cls')
-
-# print(type(water_entry.get()))
 
 def predict():
     soilentered = float(float(soil_entry.get())/10)

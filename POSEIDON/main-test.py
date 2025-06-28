@@ -1,12 +1,11 @@
-import tensorflow as tf
-import numpy as np
+import tensorflow as tf, numpy as np, random
 from flask import Flask, request, jsonify
 from sklearn.preprocessing import MinMaxScaler
 
 app = Flask(__name__)
 
 # Generate training data
-np.random.seed(42)
+np.random.seed(random.randint(0, 1000))
 num_samples = 1000
 x_train = np.random.rand(num_samples, 4) * [14, 100, 14, 100]
 y_train = np.clip(14 - (x_train[:, 1] / 10) - (x_train[:, 3] / 10) + (x_train[:, 2] / 2) - abs(x_train[:, 0] - 7), 1, 10)
