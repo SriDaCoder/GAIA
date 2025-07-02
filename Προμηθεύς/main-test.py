@@ -1,43 +1,40 @@
-import os, random
-os.system('cls' if os.name == 'nt' else 'clear')
+import random
+import string
 
-origin = input("Enter code: ")
-encryption_table = {}
-encryption_key = ""
-alphabets = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+def generate_key():
+    # Create a random 3-digit number for each letter a–z
+    alphabet = string.ascii_lowercase
+    used_numbers = set()
+    key = ""
+    for letter in alphabet:
+        while True:
+            num = str(random.randint(100, 999))
+            if num not in used_numbers:
+                used_numbers.add(num)
+                key += num
+                break
+    return key  # 26 * 3 = 78-digit key
 
-for each in alphabets:
-    random_num = random.randint(1, len(alphabets) + len(origin))
-    encryption_key += str(random_num)
-    encryption_table[each] = str(random_num)
+def get_encryption_table(key):
+    # Map each letter to a 3-digit number from the key
+    table = {}
+    for i, letter in enumerate(string.ascii_lowercase):
+        table[letter] = key[i*3:i*3+3]
+    return table
 
-output = None
+def encrypt(text, key):
+    table = get_encryption_table(key)
+    result = ""
+    for char in text.lower():
+        if char in table:
+            result += table[char]
+        else:
+            result += char  # Leave symbols, digits, etc.
+    return result
 
-def encryptor(code):
-    if code != "":
-        output = ""
-        for i in code:
-            if i in encryption_table and random_num % 2 == 0:
-                output += str(encryption_table[i])
-            elif i in encryption_table and random_num % 2 == 1:
-                output += i
-            else:
-                pass
-    return output
-
-if origin != "":
-    file_path = input("File: ")
-    if os.path.exists(file_path):
-        with open(file_path, 'r') as file:
-            x = file.readline()
-            print("Encrypted text:", encryptor(x))
-            print("Encryption Key:", encryption_key)
-            x = input("Do you want to save the encrypted text? (y/n): ").strip().lower()
-            if x == 'y':
-                with open(file_path, 'w') as file:
-                    file.write(encryptor(x))
-                    print(f"Encrypted text saved to {file_path}.")
-            else:
-                print("Encrypted text not saved.")
-    else:
-        print("File does not exist. Please check the file path and try again.")
+if __name__ == "__main__":
+    text = input("Enter text to encrypt: ")
+    key = generate_key()
+    print(f"Generated Key: {key}")
+    encrypted_text = encrypt(text, key)
+    print("Encrypted:", encrypted_text)
