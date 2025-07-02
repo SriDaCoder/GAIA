@@ -1,40 +1,39 @@
 import random
-import string
 
+# Generate 3-digit code per printable ASCII character (space to ~)
 def generate_key():
-    # Create a random 3-digit number for each letter a–z
-    alphabet = string.ascii_lowercase
-    used_numbers = set()
-    key = ""
-    for letter in alphabet:
+    chars = [chr(i) for i in range(32, 127)]  # ASCII 32–126
+    used = set()
+    key = []
+    for _ in chars:
         while True:
-            num = str(random.randint(100, 999))
-            if num not in used_numbers:
-                used_numbers.add(num)
-                key += num
+            code = str(random.randint(100, 999))
+            if code not in used:
+                used.add(code)
+                key.append(code)
                 break
-    return key  # 26 * 3 = 78-digit key
+    return key  # List of 95 codes in ASCII order
 
-def get_encryption_table(key):
-    # Map each letter to a 3-digit number from the key
-    table = {}
-    for i, letter in enumerate(string.ascii_lowercase):
-        table[letter] = key[i*3:i*3+3]
-    return table
+def get_char_to_code_table(key):
+    chars = [chr(i) for i in range(32, 127)]
+    return dict(zip(chars, key))
 
 def encrypt(text, key):
-    table = get_encryption_table(key)
-    result = ""
-    for char in text.lower():
-        if char in table:
-            result += table[char]
-        else:
-            result += char  # Leave symbols, digits, etc.
-    return result
+    table = get_char_to_code_table(key)
+    return ''.join(table.get(c, c) for c in text)
 
+def export_key(key):
+    return ''.join(key)  # Just 95 * 3 = 285 digits
+
+# Main
 if __name__ == "__main__":
-    text = input("Enter text to encrypt: ")
-    key = generate_key()
-    print(f"Generated Key: {key}")
-    encrypted_text = encrypt(text, key)
-    print("Encrypted:", encrypted_text)
+    msg = input("Enter text to encrypt: ")
+    key_list = generate_key()
+    encrypted = encrypt(msg, key_list)
+    key_str = export_key(key_list)
+
+    print("\n--- Encrypted ---")
+    print(encrypted)
+
+    print("\n--- Key ---")
+    print(key_str)
