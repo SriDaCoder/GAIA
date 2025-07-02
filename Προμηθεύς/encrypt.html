@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Encryptor</title>
+        <style>
+            body { font-family: monospace; background: #111; color: #67ff67; padding: 20px; }
+            input, button, textarea { width: 100%; margin-top: 10px; font-family: monospace; background: #222; color: #67ff67; border: 1px solid #0f0; padding: 5px; }
+            .inputText { width: 100%; height: 100px; color: #67ff67;}
+        </style>
+    </head>
+    <body>
+        <h2>Text Encryptor</h2>
+        <textarea id="inputText" rows="4" placeholder="Enter text to encrypt..."></textarea>
+        <button onclick="encrypt()">Encrypt</button>
+        
+        <h3>Encrypted:</h3>
+        <textarea id="encrypted" rows="4" readonly></textarea>
+        
+        <h3>Key:</h3>
+        <textarea id="key" rows="4" readonly></textarea>
+
+        <script>
+            function generateKey() {
+            const chars = [];
+            for (let i = 32; i < 127; i++) chars.push(String.fromCharCode(i));
+
+            const used = new Set();
+            const key = [];
+
+            for (let i = 0; i < chars.length; i++) {
+                let code;
+                do {
+                code = Math.floor(100 + Math.random() * 900).toString();
+                } while (used.has(code));
+                used.add(code);
+                key.push(code);
+            }
+
+            return key;
+            }
+
+            function getCharToCodeTable(key) {
+            const table = {};
+            for (let i = 0, ascii = 32; i < key.length; i++, ascii++) {
+                table[String.fromCharCode(ascii)] = key[i];
+            }
+            return table;
+            }
+
+            function encryptText(text, key) {
+            const table = getCharToCodeTable(key);
+            return Array.from(text).map(c => table[c] || c).join('');
+            }
+
+            function encrypt() {
+            const msg = document.getElementById("inputText").value;
+            const key = generateKey();
+            const encrypted = encryptText(msg, key);
+            const keyStr = key.join('');
+
+            document.getElementById("encrypted").value = encrypted;
+            document.getElementById("key").value = keyStr;
+            }
+        </script>
+        <button onclick="window.location.href='decrypt.html'">Go to Decryptor</button>
+        <button onclick="window.location.href='index.html'">Back to Home</button>
+    </body>
+</html>

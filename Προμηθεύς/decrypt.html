@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <title>Decryptor</title>
+        <style>
+            body { font-family: monospace; background: #111; color: #67ff67; padding: 20px; }
+            input, button, textarea { width: 100%; margin-top: 10px; font-family: monospace; background: #222; color: #67ff67; border: 1px solid #0f0; padding: 5px; }
+            .inputText { width: 100%; height: 100px; color: #67ff67;}
+        </style>
+    </head>
+    <body>
+        <h2>Text Decryptor</h2>
+        <textarea id="cipherText" rows="4" placeholder="Enter encrypted text..."></textarea>
+        <textarea id="keyInput" rows="2" placeholder="Enter 285-digit key..."></textarea>
+        <button onclick="decrypt()">Decrypt</button>
+        <h3>Decrypted:</h3>
+        <textarea id="decrypted" rows="4" readonly></textarea>
+
+        <script>
+            function importKey(keyStr) {
+            const key = [];
+            for (let i = 0; i < keyStr.length; i += 3) {
+                key.push(keyStr.slice(i, i + 3));
+            }
+            return key;
+            }
+
+            function getCodeToCharTable(key) {
+            const table = {};
+            for (let i = 0, ascii = 32; i < key.length; i++, ascii++) {
+                table[key[i]] = String.fromCharCode(ascii);
+            }
+            return table;
+            }
+
+            function decryptText(cipher, key) {
+            const table = getCodeToCharTable(key);
+            let result = "";
+            let i = 0;
+            while (i < cipher.length) {
+                const chunk = cipher.slice(i, i + 3);
+                if (table[chunk]) {
+                result += table[chunk];
+                i += 3;
+                } else {
+                result += cipher[i];
+                i += 1;
+                }
+            }
+            return result;
+            }
+
+            function decrypt() {
+            const cipher = document.getElementById("cipherText").value;
+            const keyStr = document.getElementById("keyInput").value.trim();
+            if (keyStr.length !== 285) {
+                alert("Key must be exactly 285 digits.");
+                return;
+            }
+
+            const key = importKey(keyStr);
+            const decrypted = decryptText(cipher, key);
+            document.getElementById("decrypted").value = decrypted;
+            }
+        </script>
+        <button onclick="window.location.href='encrypt.html'">Go to Encryptor</button>
+        <button onclick="window.location.href='index.html'">Back to Home</button>
+    </body>
+</html>
