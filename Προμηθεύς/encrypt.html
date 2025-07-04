@@ -12,7 +12,7 @@
     <body>
         <h2>Text Encryptor</h2>
         <textarea id="inputText" rows="4" placeholder="Enter text to encrypt..."></textarea>
-        <button onclick="encrypt()">Encrypt</button>
+        <button onclick="encryptAndShow()">Encrypt</button>
         
         <h3>Encrypted:</h3>
         <textarea id="encrypted" rows="4" readonly></textarea>
@@ -21,46 +21,119 @@
         <textarea id="key" rows="4" readonly></textarea>
 
         <script>
+            const base40chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ@#$%";
+
             function generateKey() {
-            const chars = [];
-            for (let i = 32; i < 127; i++) chars.push(String.fromCharCode(i));
-
-            const used = new Set();
-            const key = [];
-
-            for (let i = 0; i < chars.length; i++) {
-                let code;
-                do {
-                code = Math.floor(100 + Math.random() * 900).toString();
-                } while (used.has(code));
-                used.add(code);
-                key.push(code);
+                const used = new Set();
+                const key = [];
+                for (let i = 32; i < 127; i++) {
+                    let code;
+                    do {
+                    code = Math.floor(100 + Math.random() * 900).toString();
+                    } while (used.has(code));
+                    used.add(code);
+                    key.push(code);
+                }
+                return key;
             }
 
-            return key;
-            }
-
+            // Maps char → 3-digit code
             function getCharToCodeTable(key) {
-            const table = {};
-            for (let i = 0, ascii = 32; i < key.length; i++, ascii++) {
-                table[String.fromCharCode(ascii)] = key[i];
-            }
-            return table;
+                const table = {};
+                for (let i = 0, ascii = 32; i < key.length; i++, ascii++) {
+                    table[String.fromCharCode(ascii)] = key[i];
+                }
+                return table;
             }
 
+            // Encrypt text to numeric string using key
             function encryptText(text, key) {
-            const table = getCharToCodeTable(key);
-            return Array.from(text).map(c => table[c] || c).join('');
+                const table = getCharToCodeTable(key);
+                return Array.from(text).map(c => table[c] || c).join('');
+                }
+
+                // Base-40 encode a big numeric string
+                function toBase40(numStr) {
+                let num = BigInt(numStr);
+                if (num === 0n) return "0";
+                let result = "";
+                while (num > 0n) {
+                    result = base40chars[Number(num % 40n)] + result;
+                    num = num / 40n;
+                }
+                return result;
             }
 
-            function encrypt() {
-            const msg = document.getElementById("inputText").value;
-            const key = generateKey();
-            const encrypted = encryptText(msg, key);
-            const keyStr = key.join('');
+            // Base-40 decode to numeric string
+            function fromBase40(str) {
+                str = str.toUpperCase();
+                let num = 0n;
+                for (let ch of str) {
+                    const val = base40chars.indexOf(ch);
+                    if (val === -1) return null;
+                    num = num * 40n + BigInt(val);
+                }
+                return num.toString();
+            }
 
-            document.getElementById("encrypted").value = encrypted;
-            document.getElementById("key").value = keyStr;
+            // Split numeric string into 3-digit codes
+            function importKey(keyStr) {
+                const key = [];
+                for (let i = 0; i < keyStr.length; i += 3) {
+                    key.push(keyStr.slice(i, i + 3));
+                }
+                return key;
+            }
+
+            // Map 3-digit codes → chars
+            function getCodeToCharTable(key) {
+                const table = {};
+                for (let i = 0, ascii = 32; i < key.length; i++, ascii++) {
+                    table[key[i]] = String.fromCharCode(ascii);
+                }
+                return table;
+            }
+
+            // Decrypt numeric string back to text
+            function decryptText(cipher, key) {
+                const table = getCodeToCharTable(key);
+                let result = "";
+                let i = 0;
+                while (i < cipher.length) {
+                    const chunk = cipher.slice(i, i + 3);
+                    if (table[chunk]) {
+                    result += table[chunk];
+                    i += 3;
+                    } else {
+                    result += cipher[i];
+                    i += 1;
+                    }
+                }
+                return result;
+            }
+
+            // Encrypt + show encrypted and key
+            function encryptAndShow() {
+                const msg = document.getElementById("inputText").value;
+                const key = generateKey();
+                const encrypted = encryptText(msg, key);
+                const base40key = toBase40(key.join(''));
+                document.getElementById("encrypted").value = encrypted;
+                document.getElementById("key").value = base40key;
+            }
+
+            // Decrypt using base40 key and cipher text
+            function decrypt() {
+                const cipher = document.getElementById("cipherText").value.trim();
+                const base40KeyStr = document.getElementById("keyInput").value.trim();
+                const keyNumericStr = fromBase40(base40KeyStr);
+                if (keyNumericStr === null) {
+                    document.getElementById("decrypted").value = "Invalid base-40 key.";
+                    return;
+                }
+                const key = importKey(keyNumericStr);
+                const decrypted = decryptText(cipher, key);
+                document.getElementById("decrypted").value = decrypted;
             }
         </script>
         <button onclick="window.location.href='decrypt.html'">Go to Decryptor</button>
