@@ -40,4 +40,4 @@ def predict():
     status = "Poor" if score < 5 else "Moderate" if score < 7 else "Good"
     return jsonify({"usability_score": round(score, 2), "status": status})
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=False)
