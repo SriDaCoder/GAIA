@@ -1,8 +1,8 @@
 from PyPDF2 import PdfReader, PdfWriter
 
 # Load PDFs
-main_pdf = PdfReader(r"C:\Users\srini\OneDrive - GEMS EDUCATION\Documents\BST-HHW.pdf")
-extra_pdf = PdfReader(r"C:\Users\srini\Downloads\BST-HHW-main.pdf")
+main_pdf = PdfReader(r"Path to file to which you want to add pages to")
+extra_pdf = PdfReader(r"path of file from which you want to copy the pages from")
 
 # Create a writer
 writer = PdfWriter()
