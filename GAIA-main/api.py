@@ -1,6 +1,5 @@
-from flask import Flask, request, jsonify
 from dataclasses import dataclass
-from typing import Dict, Tuple, Optional
+from typing import Dict, Tuple
 import torch
 import torch.nn as nn
 import torch.optim as optim
@@ -168,60 +167,41 @@ class MultiTaskLoss(nn.Module):
         }
 
 # -----------------------------
-# Flask API
+# Single function to run GAIA
 # -----------------------------
-app = Flask(__name__)
-device = torch.device("cpu")
-env = SyntheticEnv()
-model = Gaia(env.f_soil,env.f_water,env.f_weather,env.action_dim).to(device)
-model.eval()
-API_PASSWORD = "MySecretPassword123"
-
-@app.route("/train", methods=["POST"])
-def train_endpoint():
-    data = request.json
-    password = data.get("password")
-    if password != API_PASSWORD:
-        return jsonify({"error":"Unauthorized"}),401
-    epochs = data.get("epochs",10)
-    batch_size = data.get("batch_size",64)
-    lr = data.get("lr",3e-4)
-    model.train()
-    opt = optim.Adam(model.parameters(),lr=lr)
+def run_gaia(epochs=5, batch_size=8, lr=3e-4, device=torch.device("cpu")):
+    env = SyntheticEnv()
+    model = Gaia(env.f_soil, env.f_water, env.f_weather, env.action_dim).to(device)
     crit = MultiTaskLoss()
-    logs_epoch=[]
-    for epoch in range(1,epochs+1):
-        obs, labels = env.sample_batch(batch_size,device)
+    opt = optim.Adam(model.parameters(), lr=lr)
+    history = []
+
+    for epoch in range(1, epochs+1):
+        obs, labels = env.sample_batch(batch_size=batch_size, device=device)
+        model.train()
         decision, subs = model(obs)
-        loss, logs = crit((decision,subs),labels)
+        loss, logs = crit((decision, subs), labels)
         opt.zero_grad()
         loss.backward()
         nn.utils.clip_grad_norm_(model.parameters(),1.0)
         opt.step()
-        logs_epoch.append({k:round(v.item(),4) for k,v in logs.items()})
-    model.eval()
-    return jsonify({"status":"trained","logs":logs_epoch})
+        model.eval()
+        history.append({k: v.item() for k, v in logs.items()})
 
-@app.route("/infer", methods=["POST"])
-def infer_endpoint():
-    data = request.json
-    password = data.get("password")
-    if password != API_PASSWORD:
-        return jsonify({"error":"Unauthorized"}),401
-    try:
-        soil = torch.tensor(data["soil"],dtype=torch.float32).unsqueeze(0).to(device)
-        water = torch.tensor(data["water"],dtype=torch.float32).unsqueeze(0).to(device)
-        weather = torch.tensor(data["weather"],dtype=torch.float32).unsqueeze(0).to(device)
-    except KeyError:
-        return jsonify({"error":"Missing soil, water, or weather"}),400
-    obs = Observation(soil,water,weather)
-    with torch.no_grad():
-        decision,_ = model(obs)
-    return jsonify({
-        "chosen_action":decision.chosen.squeeze(0).tolist(),
-        "provenance":decision.provenance.squeeze(0).tolist(),
-        "risk":decision.risk.squeeze(0).item()
-    })
+    # Return last batch inference for convenience
+    return {
+        "chosen_action": decision.chosen.detach(),
+        "provenance": decision.provenance.detach(),
+        "risk": decision.risk.detach(),
+        "training_history": history
+    }
 
-if __name__=="__main__":
-    app.run(host="0.0.0.0",port=5000)
+# -----------------------------
+# Run
+# -----------------------------
+# if __name__ == "__main__":
+#    result = run_gaia(epochs=10, batch_size=16)
+#    print("Chosen action:", result["chosen_action"])
+#    print("Provenance:", result["provenance"])
+#    print("Risk:", result["risk"])
+#    print("Training history:", result["training_history"])
