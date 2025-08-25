@@ -1,8 +1,9 @@
 from dataclasses import dataclass
-from typing import Dict, Tuple
+from typing import Dict, Tuple, Optional
 import torch
 import torch.nn as nn
 import torch.optim as optim
+import time
 
 # -----------------------------
 # Data contracts
@@ -137,7 +138,6 @@ class SyntheticEnv:
 class MultiTaskLoss(nn.Module):
     def __init__(self):
         super().__init__()
-        self.bce = nn.BCEWithLogitsLoss()
         self.mse = nn.MSELoss()
     def forward(self,outputs:Tuple[GaiaDecision,Dict[str,SubsystemAction]],labels:Dict[str,torch.Tensor]):
         decision, subs = outputs
@@ -167,16 +167,20 @@ class MultiTaskLoss(nn.Module):
         }
 
 # -----------------------------
-# Single function to run GAIA
+# API-like functions
 # -----------------------------
-def run_gaia(epochs=5, batch_size=8, lr=3e-4, device=torch.device("cpu")):
+def run_gaia_forever(batch_size=16, lr=3e-4, device=torch.device("cpu"), sleep_time:float=0.0):
+    """
+    Runs GAIA training indefinitely until the process is killed externally.
+    """
     env = SyntheticEnv()
     model = Gaia(env.f_soil, env.f_water, env.f_weather, env.action_dim).to(device)
     crit = MultiTaskLoss()
     opt = optim.Adam(model.parameters(), lr=lr)
-    history = []
 
-    for epoch in range(1, epochs+1):
+    epoch = 0
+    while True:
+        epoch += 1
         obs, labels = env.sample_batch(batch_size=batch_size, device=device)
         model.train()
         decision, subs = model(obs)
@@ -186,22 +190,32 @@ def run_gaia(epochs=5, batch_size=8, lr=3e-4, device=torch.device("cpu")):
         nn.utils.clip_grad_norm_(model.parameters(),1.0)
         opt.step()
         model.eval()
-        history.append({k: v.item() for k, v in logs.items()})
 
-    # Return last batch inference for convenience
+        print(f"[Epoch {epoch}] Loss: {logs['loss'].item():.4f}")
+
+        if sleep_time > 0:
+            time.sleep(sleep_time)
+
+def infer_gaia(model: Gaia, soil, water, weather, device=torch.device("cpu")):
+    """
+    Run inference with custom soil, water, weather arrays.
+    Inputs: lists or numpy-like arrays.
+    """
+    soil_t = torch.tensor(soil, dtype=torch.float32).unsqueeze(0).to(device)
+    water_t = torch.tensor(water, dtype=torch.float32).unsqueeze(0).to(device)
+    weather_t = torch.tensor(weather, dtype=torch.float32).unsqueeze(0).to(device)
+    obs = Observation(soil_t, water_t, weather_t)
+    with torch.no_grad():
+        decision, _ = model(obs)
     return {
-        "chosen_action": decision.chosen.detach(),
-        "provenance": decision.provenance.detach(),
-        "risk": decision.risk.detach(),
-        "training_history": history
+        "chosen_action": decision.chosen.squeeze(0).tolist(),
+        "provenance": decision.provenance.squeeze(0).tolist(),
+        "risk": decision.risk.squeeze(0).item()
     }
 
 # -----------------------------
-# Run
+# Standalone execution
 # -----------------------------
-# if __name__ == "__main__":
-#    result = run_gaia(epochs=10, batch_size=16)
-#    print("Chosen action:", result["chosen_action"])
-#    print("Provenance:", result["provenance"])
-#    print("Risk:", result["risk"])
-#    print("Training history:", result["training_history"])
+if __name__ == "__main__":
+    # This will run forever until terminated
+    run_gaia_forever(batch_size=16, lr=3e-4, sleep_time=0.5)
